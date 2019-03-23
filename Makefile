@@ -17,6 +17,8 @@ SRCS			+= hashmap_len.c
 SRCS			+= hashmap_delete.c
 SRCS			+= hashmap_iter.c
 SRCS			+= hashmap_map.c
+SRCS			+= hashmap_filter.c
+SRCS			+= hashmap_reduce.c
 
 INCS_PATHS		= ./incs/
 

@@ -12,6 +12,8 @@ typedef void	(*c_hashmap_creator)(
 	size_t *new_key_size,
 	void **new_content
 );
+typedef int	(*c_hashmap_validator)(const void *key, size_t key_size, const void *content);
+typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
 
 struct s_hashmap;
 typedef struct s_hashmap s_hashmap;
@@ -75,5 +77,7 @@ size_t			hashmap_len(s_hashmap *map);
 
 void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
+s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
+void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
 
 #endif
