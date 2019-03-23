@@ -9,7 +9,10 @@ VPATH			= ./srcs/
 
 SRCS			= hashmap_new.c
 SRCS			+= hashmap_insert.c
+SRCS			+= hashmap_get.c
 SRCS			+= hashmap_hash.c
+SRCS			+= hashmap_resize.c
+SRCS			+= hashmap_remove.c
 
 INCS_PATHS		= ./incs/
 

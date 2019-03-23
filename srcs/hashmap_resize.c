@@ -1,27 +1,82 @@
 
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <assert.h>
 #include "_hashmap.h"
 
-void	hashmap_resize(s_hashmap **map, size_t new_capacity)
+static inline int	hashmap_shrink_entries(s_hashmap *map)
 {
-	s_hashmap	*current = *map;
-	s_hashmap	*new = hashmap_new_cap(new_capacity);
+	s_entry		*new_entries = malloc(
+		sizeof(*new_entries) * (map->used + 1)
+	);
+	size_t		new_entries_index = 0;
+
+	if (new_entries != NULL)
+	{
+		map->nentries = map->used + 1;
+		for (size_t i = 0; i < map->nentries; i++)
+		{
+			if (map->entries[i].key != NULL)
+			{
+				memcpy(
+					new_entries + new_entries_index,
+					map->entries + HASHMAP_OVERSIZE_ENTRIES,
+					sizeof(map->entries[i])
+				);
+				new_entries_index++;
+			}
+		}
+		memset(new_entries + new_entries_index, 0, sizeof(new_entries[0]));
+		free(map->entries);
+		map->entries = new_entries;
+		return 0;
+	}
+	return -1;
+}
+
+int		hashmap_resize(s_hashmap *map, size_t new_capacity)
+{
 	size_t		normed_hash;
 	size_t		hash;
+	ssize_t		*indices;
 
-	if (new != NULL)
+	// Sanity check, should never happen
+	assert(map->nentries <= new_capacity);
+
+	if (new_capacity < map->capacity)
 	{
-		memcpy(new, current, sizeof(*new));
-		new->capacity = new_capacity;
-		for (size_t i = 0; i < new->nentries; i++)
+		/*
+		** Since this action has a cost ( reallocating entries manually )
+		** We perform it only when we resize down the entier hashmap
+		*/
+		if (hashmap_shrink_entries(map) < 0)
 		{
-			hash = new->entries[i].hash;
-			do
-			{
-				normed_hash = HASH_NORM(hash++, new_capacity);
-			}
-			while (new->indices[i] != UNUSED_ENTRY);
-
-			new->indices[normed_hash] = i;
+			return -1;
 		}
 	}
+
+	indices = malloc(sizeof(*indices) * new_capacity);
+	if (indices != NULL)
+	{
+		map->capacity = new_capacity;
+		for (size_t i = 0; i < new_capacity; i++) {
+			indices[i] = HASHMAP_DEFAULT_ENTRY;
+		}
+		for (size_t i = 0; i < map->nentries; i++)
+		{
+			hash = map->entries[i].hash;
+			do
+			{
+				normed_hash = hashmap_hash_norm(hash++, new_capacity);
+			}
+			while (indices[normed_hash] != HASHMAP_UNUSED_ENTRY);
+
+			indices[normed_hash] = i;
+		}
+		free(map->indices);
+		map->indices = indices;
+		return 0;
+	}
+	return -1;
 }
