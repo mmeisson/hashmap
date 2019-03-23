@@ -13,6 +13,10 @@ SRCS			+= hashmap_get.c
 SRCS			+= hashmap_hash.c
 SRCS			+= hashmap_resize.c
 SRCS			+= hashmap_remove.c
+SRCS			+= hashmap_len.c
+SRCS			+= hashmap_delete.c
+SRCS			+= hashmap_iter.c
+SRCS			+= hashmap_map.c
 
 INCS_PATHS		= ./incs/
 

@@ -57,6 +57,15 @@ static inline int		hashmap_is_underloaded(size_t capacity, size_t used)
 		&& used / (float)capacity < HASHMAP_MIN_LOAD;
 }
 
+typedef void	(*c_hashmap_iterator)(const void *key, size_t key_size, const void *content);
+typedef void	(*c_hashmap_creator)(
+	const void *key,
+	size_t key_size,
+	const void *content,
+	void **new_key,
+	size_t *new_key_size,
+	void **new_content
+);
 
 /*
 **	An entry is a container for user data
@@ -101,8 +110,13 @@ s_hashmap		*hashmap_new(s_hashmap *map);
 s_hashmap		*hashmap_new_cap(s_hashmap *map, size_t new_capacity);
 
 size_t			hashmap_hash(const void *content, size_t size);
+int				hashmap_insert(s_hashmap *map, const void *key, size_t key_size, const void * content);
 int				hashmap_resize(s_hashmap *hashmap, size_t new_capacity);
 const void		*hashmap_get(s_hashmap *hashmap, const void * key, size_t key_size);
 void			hashmap_remove(s_hashmap *hashmap, const void * key, size_t key_size, void (*remove)(void *, void *));
+void			hashmap_delete(s_hashmap *hashmap, void (*remove)(void *, void *));
+
+void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
+s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 
 #endif

@@ -11,7 +11,7 @@ void			hashmap_iter(s_hashmap *map, c_hashmap_iterator iter)
 
 			if (entry->key != NULL)
 			{
-				iter(entry->key, entry->content);
+				iter(entry->key, entry->key_size, entry->content);
 			}
 		}
 	}

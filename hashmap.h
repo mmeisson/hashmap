@@ -3,6 +3,16 @@
 
 # include <stdlib.h>
 
+typedef void	(*c_hashmap_iterator)(const void *key, size_t key_size, const void *content);
+typedef void	(*c_hashmap_creator)(
+	const void *key,
+	size_t key_size,
+	const void *content,
+	void **new_key,
+	size_t *new_key_size,
+	void **new_content
+);
+
 struct s_hashmap;
 typedef struct s_hashmap s_hashmap;
 
@@ -41,7 +51,7 @@ s_hashmap		*hashmap_new_cap(s_hashmap *hasmap, size_t base_capacity);
 **	of these pointers until the hashmap is deleted
 **	This also means you can store some abstract type like function's pointers
 */
-void			hashmap_insert(s_hashmap *map, const void *key, size_t key_size, const void * content);
+int				hashmap_insert(s_hashmap *map, const void *key, size_t key_size, const void * content);
 
 /*
 **	Retrieve a data from a key. If the key does not exists, then return NULL.
@@ -62,5 +72,8 @@ void	    	hashmap_remove(s_hashmap *hashmap, const void * key, size_t key_size, 
 **	This action has actually no cost
 */
 size_t			hashmap_len(s_hashmap *map);
+
+void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
+s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 
 #endif
