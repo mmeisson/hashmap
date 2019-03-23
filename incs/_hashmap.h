@@ -97,6 +97,9 @@ typedef struct s_hashmap
 	ssize_t			*indices;
 }				s_hashmap;
 
+s_hashmap		*hashmap_new(s_hashmap *map);
+s_hashmap		*hashmap_new_cap(s_hashmap *map, size_t new_capacity);
+
 size_t			hashmap_hash(const void *content, size_t size);
 int				hashmap_resize(s_hashmap *hashmap, size_t new_capacity);
 const void		*hashmap_get(s_hashmap *hashmap, const void * key, size_t key_size);
