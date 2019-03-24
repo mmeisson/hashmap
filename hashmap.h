@@ -75,6 +75,8 @@ void	    	hashmap_remove(s_hashmap *hashmap, const void * key, size_t key_size, 
 */
 size_t			hashmap_len(s_hashmap *map);
 
+void			hashmap_reverse(s_hashmap *map);
+
 void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
