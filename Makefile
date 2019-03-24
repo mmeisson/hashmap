@@ -3,7 +3,7 @@ NAME			= hashmap
 
 CC				= gcc
 
-CFLAGS			= -MD -Wall -Wextra -g -std=gnu99
+CFLAGS			= -MD -Wall -Wextra -O2
 
 VPATH			= ./srcs/
 
@@ -55,7 +55,7 @@ clean:
 
 fclean:
 	rm -rf $(OBJS_PATH)
-	rm -f $(NAME)
+	rm -f $(NAME).a
 
 re:
 	make fclean
