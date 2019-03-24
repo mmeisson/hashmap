@@ -1,5 +1,5 @@
 
-NAME			= hashmap
+NAME			= libhashmap
 
 CC				= gcc
 
