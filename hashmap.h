@@ -14,6 +14,7 @@ typedef void	(*c_hashmap_creator)(
 );
 typedef int	(*c_hashmap_validator)(const void *key, size_t key_size, const void *content);
 typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
+typedef int		(*c_hashmap_comparator)(const void *left, const void *right);
 
 struct s_hashmap;
 typedef struct s_hashmap s_hashmap;
@@ -81,5 +82,13 @@ void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
 void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
+
+void			hashmap_sort_keys(s_hashmap *map, c_hashmap_comparator);
+void			hashmap_sort_content(s_hashmap *map, c_hashmap_comparator);
+
+/*
+**	A default sort ?
+*/
+# define hashmap_sort(map, comparator) hashmap_sort_content(map, comparator)
 
 #endif

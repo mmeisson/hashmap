@@ -3,7 +3,7 @@ NAME			= hashmap
 
 CC				= gcc
 
-CFLAGS			= -MD -Wall -Werror -Wextra -g
+CFLAGS			= -MD -Wall -Wextra -g -std=gnu99
 
 VPATH			= ./srcs/
 
@@ -20,6 +20,9 @@ SRCS			+= hashmap_map.c
 SRCS			+= hashmap_filter.c
 SRCS			+= hashmap_reduce.c
 SRCS			+= hashmap_reverse.c
+SRCS			+= hashmap_remap_indices.c
+SRCS			+= hashmap_sort_keys.c
+SRCS			+= hashmap_sort_content.c
 
 INCS_PATHS		= ./incs/
 

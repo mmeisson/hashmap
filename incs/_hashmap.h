@@ -68,6 +68,7 @@ typedef void	(*c_hashmap_creator)(
 );
 typedef int		(*c_hashmap_validator)(const void *key, size_t key_size, const void *content);
 typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
+typedef int		(*c_hashmap_comparator)(const void *left, const void *right);
 
 /*
 **	An entry is a container for user data
@@ -120,8 +121,14 @@ void			hashmap_delete(s_hashmap *hashmap, void (*remove)(void *, void *));
 
 void			hashmap_reverse(s_hashmap *map);
 
+void			hashmap_sort_keys(s_hashmap *map, c_hashmap_comparator);
+void			hashmap_sort_content(s_hashmap *map, c_hashmap_comparator);
+
+s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
 void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
+
+void			hashmap_remap_indices(s_hashmap *map);
 
 #endif
