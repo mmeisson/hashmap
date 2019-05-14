@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include "_hashmap.h"
 
-static int	key_comparator(void *first, const void *second, const void *context)
+#if defined(__APPLE__) || defined(BSD)
+
+static int	key_comparator(void *context, const void *first, const void *second)
 {
 	const s_entry	*f = first;
 	const s_entry	*s = second;
@@ -10,6 +12,19 @@ static int	key_comparator(void *first, const void *second, const void *context)
 
 	return ctx->callback((void *)f->key, s->key, ctx->context);
 }
+
+#else
+
+static int	key_comparator(const void *first, const void *second, void *context)
+{
+	const s_entry	*f = first;
+	const s_entry	*s = second;
+	const struct	s_hashmap_sortcontext		*ctx = context;
+
+	return ctx->callback((void *)f->key, s->key, ctx->context);
+}
+
+#endif
 
 void    hashmap_sort_keys_ctx(s_hashmap *map, c_hashmap_comparator_ctx callback, void *context)
 {

@@ -20,7 +20,7 @@ void        hashmap_remap_indices(s_hashmap *map)
             {
                 normalized_hash = hashmap_hash_norm(hash++, map->capacity);
             }
-            while (map->indices[i] != HASHMAP_UNUSED_ENTRY);
+            while (map->indices[normalized_hash] != HASHMAP_UNUSED_ENTRY);
             map->indices[normalized_hash] = i;
         }
     }

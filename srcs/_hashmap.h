@@ -88,8 +88,13 @@ typedef int		(*c_hashmap_validator)(const void *key, size_t key_size, const void
 typedef int		(*c_hashmap_validator_ctx)(const void *key, size_t key_size, const void *content, void *context);
 typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
 typedef void	(*c_hashmap_reducor_ctx)(const void *key, size_t key_size, const void *content, void **data, void *context);
-typedef int		(*c_hashmap_comparator)(void *left, const void *right);
-typedef int		(*c_hashmap_comparator_ctx)(void *left, const void *right, void *context);
+typedef int		(*c_hashmap_comparator)(const void *left, const void *right);
+
+# if defined(__APPLE__) || defined(BSD)
+typedef int		(*c_hashmap_comparator_ctx)(void *context, const void *left, const void *right);
+# else
+typedef int		(*c_hashmap_comparator_ctx)(const void *left, const void *right, void *context);
+# endif
 
 /*
 **	An entry is a container for user data
