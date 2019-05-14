@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include "_hashmap.h"
 
-static int	content_comparator(const void *first, const void *second, void *callback)
+static int	content_comparator(void *first, const void *second, const void *callback)
 {
 	const s_entry	*f = first;
 	const s_entry	*s = second;
 	c_hashmap_comparator	c = callback;
 
-	return c(f->content, s->content);
+	return c((void *)f->content, s->content);
 }
 
-void    hashmap_sort_keys(s_hashmap *map, c_hashmap_comparator callback)
+void    hashmap_sort_content(s_hashmap *map, c_hashmap_comparator callback)
 {
 	if (map->entries != NULL)
 	{
-		qsort_r(
+		QSORT_R_COMPATIBLE(
 			map->entries,
 			map->nentries,
 			sizeof(map->entries[0]),

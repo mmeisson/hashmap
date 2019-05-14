@@ -4,6 +4,9 @@
 # include <stdlib.h>
 
 typedef void	(*c_hashmap_iterator)(const void *key, size_t key_size, const void *content);
+typedef void	(*c_hashmap_iterator_ctx)(
+	const void *key, size_t key_size, const void *content, void *ctx
+);
 typedef void	(*c_hashmap_creator)(
 	const void *key,
 	size_t key_size,
@@ -12,8 +15,19 @@ typedef void	(*c_hashmap_creator)(
 	size_t *new_key_size,
 	void **new_content
 );
+typedef void	(*c_hashmap_creator_ctx)(
+	const void *key,
+	size_t key_size,
+	const void *content,
+	void **new_key,
+	size_t *new_key_size,
+	void **new_content,
+	void *context
+);
 typedef int	(*c_hashmap_validator)(const void *key, size_t key_size, const void *content);
+typedef int	(*c_hashmap_validator_ctx)(const void *key, size_t key_size, const void *content, void *context);
 typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
+typedef void	(*c_hashmap_reducor_ctx)(const void *key, size_t key_size, const void *content, void **data, void *context);
 typedef int		(*c_hashmap_comparator)(const void *left, const void *right);
 
 struct s_hashmap;
@@ -79,12 +93,24 @@ size_t			hashmap_len(s_hashmap *map);
 void			hashmap_reverse(s_hashmap *map);
 
 void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
+void			hashmap_find(s_hashmap *map, c_hashmap_validator callback);
+
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
 void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
 
+void			hashmap_iter_ctx(s_hashmap *map, c_hashmap_iterator_ctx callback, void *context);
+void			hashmap_find_ctx(s_hashmap *map, c_hashmap_validator callback);
+
+s_hashmap		*hashmap_map_ctx(s_hashmap *map, c_hashmap_creator_ctx callback, void *context);
+s_hashmap		*hashmap_filter_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context);
+void			hashmap_reduce_ctx(s_hashmap *map, c_hashmap_reducor_ctx callback, void *context);
+
 void			hashmap_sort_keys(s_hashmap *map, c_hashmap_comparator);
 void			hashmap_sort_content(s_hashmap *map, c_hashmap_comparator);
+
+void			hashmap_sort_keys_ctx(s_hashmap *map, c_hashmap_comparator_ctx, void *content);
+void			hashmap_sort_content_ctx(s_hashmap *map, c_hashmap_comparator_ctx, void *content);
 
 /*
 **	A default sort ?

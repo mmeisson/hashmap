@@ -23,6 +23,14 @@ SRCS			+= hashmap_reverse.c
 SRCS			+= hashmap_remap_indices.c
 SRCS			+= hashmap_sort_keys.c
 SRCS			+= hashmap_sort_content.c
+SRCS			+= hashmap_find.c
+SRCS			+= hashmap_find_ctx.c
+SRCS			+= hashmap_iter_ctx.c
+SRCS			+= hashmap_map_ctx.c
+SRCS			+= hashmap_reduce_ctx.c
+SRCS			+= hashmap_filter_ctx.c
+SRCS			+= hashmap_sort_keys_ctx.c
+SRCS			+= hashmap_sort_content_ctx.c
 
 INCS_PATHS		= ./incs/
 
