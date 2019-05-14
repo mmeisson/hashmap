@@ -29,6 +29,7 @@ typedef int	(*c_hashmap_validator_ctx)(const void *key, size_t key_size, const v
 typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
 typedef void	(*c_hashmap_reducor_ctx)(const void *key, size_t key_size, const void *content, void **data, void *context);
 typedef int		(*c_hashmap_comparator)(const void *left, const void *right);
+typedef int		(*c_hashmap_comparator_ctx)(const void *left, const void *right, void *context);
 
 struct s_hashmap;
 typedef struct s_hashmap s_hashmap;

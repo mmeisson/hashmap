@@ -49,15 +49,11 @@ int		hashmap_insert(
 	{
 		if (map->nentries > map->used)
 		{
-			/*
-				* We have entries available
-				* parcours in reverse order, probability are higher
-				* to find available entry at the end
-			*/
 			entry_index = map->nentries;
 			while (entry_index-- > 0)
 			{
-				if (map->entries[entry_index].key == NULL) {
+				if (map->entries[entry_index].key != NULL) {
+					entry_index++;
 					break ;
 				}
 			}
