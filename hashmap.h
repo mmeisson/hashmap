@@ -98,14 +98,14 @@ size_t			hashmap_len(s_hashmap *map);
 void			hashmap_reverse(s_hashmap *map);
 
 void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
-void			hashmap_find(s_hashmap *map, c_hashmap_validator callback);
+const void		*hashmap_find(s_hashmap *map, c_hashmap_validator callback);
 
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
 void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
 
 void			hashmap_iter_ctx(s_hashmap *map, c_hashmap_iterator_ctx callback, void *context);
-void			hashmap_find_ctx(s_hashmap *map, c_hashmap_validator callback);
+const void		*hashmap_find_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context);
 
 s_hashmap		*hashmap_map_ctx(s_hashmap *map, c_hashmap_creator_ctx callback, void *context);
 s_hashmap		*hashmap_filter_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context);
@@ -116,6 +116,25 @@ void			hashmap_sort_content(s_hashmap *map, c_hashmap_comparator);
 
 void			hashmap_sort_keys_ctx(s_hashmap *map, c_hashmap_comparator_ctx, void *content);
 void			hashmap_sort_content_ctx(s_hashmap *map, c_hashmap_comparator_ctx, void *content);
+
+
+/*
+**	Some utilities when keys are strings
+*/
+static inline int	hashmap_ks_insert(s_hashmap *map, const char *key, const void *content)
+{
+	return hashmap_insert(map, key, strlen(key), content);
+}
+
+static inline const void	*hashmap_ks_get(s_hashmap *map, const void * key)
+{
+	return hashmap_get(map, key, strlen(key));
+}
+
+static inline void	    	hashmap_ks_remove(s_hashmap *map, const void * key, void (*remove)(void *, void *))
+{
+	hashmap_remove(map, key, strlen(key), remove);
+}
 
 /*
 **	A default sort ?
