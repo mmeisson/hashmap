@@ -4,7 +4,7 @@
 
 void    hashmap_delete(
 	s_hashmap *map,
-	void (*remove)(void *, void *)
+	c_hashmap_eraser remove
 )
 {
     if (map->indices != NULL)
@@ -22,7 +22,7 @@ void    hashmap_delete(
 
                 if (entry->key != NULL)
                 {
-                    remove((void *)entry->key, (void *)entry->content.as_ptr);
+                    remove((void *)entry->key, entry->content);
                 }
             }
         }

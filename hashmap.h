@@ -110,6 +110,13 @@ HASHMAP_DATA	hashmap_get(s_hashmap *hashmap, const void * key, size_t key_size);
 void	    	hashmap_remove(s_hashmap *hashmap, const void * key, size_t key_size, c_hashmap_eraser callback);
 
 /*
+**	Remove all entried from a hashmap. Th callback will receive the key as forst arg,
+**	and the value as second arg.
+**	If you don'nt need to pass callback you can pass a NULL pointer
+*/
+void	    	hashmap_delete(s_hashmap *hashmap, c_hashmap_eraser callback);
+
+/*
 **	Retrieve the "length", the number of item stored in this hash_map
 **	This action has actually no cost
 */
