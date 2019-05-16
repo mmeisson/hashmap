@@ -4,6 +4,7 @@
 # include <stdlib.h>
 # include <string.h>
 
+# include "genmap_container.h"
 
 /*
 **	hashmap's Data
@@ -19,43 +20,6 @@
 **	Avoid to set HASHMAP_DATA to a complex type since it it passed to
 **	hashmap's function by itself and not by pointers
 */
-
-/*
-**	u_genmap_container is used to store data of basic types
-**	Gives the possibility to store both pointers and primitive types
-**	without casts everywhere
-*/
-typedef union		u_genmap_container
-{
-	void	*as_ptr;
-	char	*as_str;
-	size_t	as_uint;
-	ssize_t	as_sint;
-	double	as_float;
-	char	as_char;
-}					u_genmap_container;
-
-typedef enum		e_genmap_type_container
-{
-	TYPE_PTR,
-	TYPE_STR,
-	TYPE_UINT,
-	TYPE_SINT,
-	TYPE_FLOAT,
-	TYPE_CHAR,
-}					e_genmap_type_container;
-
-
-/*
-**	The following structure stores a type hinter if you need to use one at runtime
-**	for the u_genmap_container
-*/
-
-typedef struct		t_genmap_hint_container
-{
-	u_genmap_container			container;
-	e_genmap_type_container		type;
-}					t_genmap_hint_container;
 
 # define HASHMAP_DATA		u_genmap_container
 
