@@ -1,7 +1,7 @@
 
 #include "_hashmap.h"
 
-void        hasmap_reduce_ctx(s_hashmap *map, c_hashmap_reducor_ctx callback, void **data, void *context)
+void        hashmap_reduce_ctx(s_hashmap *map, c_hashmap_reducor_ctx callback, void **data, void *context)
 {
 	if (map->entries != NULL)
 	{

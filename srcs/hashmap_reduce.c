@@ -1,7 +1,7 @@
 
 #include "_hashmap.h"
 
-void        hasmap_reduce(s_hashmap *map, c_hashmap_reducor callback, void **data)
+void        hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback, void **data)
 {
 	if (map->entries != NULL)
 	{

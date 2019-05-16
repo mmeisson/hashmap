@@ -3,7 +3,7 @@ NAME			= libhashmap
 
 CC				= gcc
 
-CFLAGS			= -MD -Wall -Wextra -O2
+CFLAGS			= -MD -Wall -Wextra -O2 -g
 
 VPATH			= ./srcs/
 
@@ -31,6 +31,7 @@ SRCS			+= hashmap_reduce_ctx.c
 SRCS			+= hashmap_filter_ctx.c
 SRCS			+= hashmap_sort_keys_ctx.c
 SRCS			+= hashmap_sort_content_ctx.c
+SRCS			+= hashmap_concat.c
 
 INCS_PATHS		= ./incs/ ./
 

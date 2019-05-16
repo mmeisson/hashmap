@@ -129,14 +129,15 @@ HASHMAP_DATA	hashmap_find(s_hashmap *map, c_hashmap_validator callback);
 
 s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
 s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
-void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
+void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback, void **data);
+s_hashmap		*hashmap_concat(s_hashmap *first, s_hashmap *second);
 
 void			hashmap_iter_ctx(s_hashmap *map, c_hashmap_iterator_ctx callback, void *context);
 HASHMAP_DATA	hashmap_find_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context);
 
 s_hashmap		*hashmap_map_ctx(s_hashmap *map, c_hashmap_creator_ctx callback, void *context);
 s_hashmap		*hashmap_filter_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context);
-void			hashmap_reduce_ctx(s_hashmap *map, c_hashmap_reducor_ctx callback, void *context);
+void			hashmap_reduce_ctx(s_hashmap *map, c_hashmap_reducor_ctx callback, void **data, void *context);
 
 void			hashmap_sort_keys(s_hashmap *map, c_hashmap_key_comparator);
 void			hashmap_sort_content(s_hashmap *map, c_hashmap_comparator);
