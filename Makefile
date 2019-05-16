@@ -32,7 +32,7 @@ SRCS			+= hashmap_filter_ctx.c
 SRCS			+= hashmap_sort_keys_ctx.c
 SRCS			+= hashmap_sort_content_ctx.c
 
-INCS_PATHS		= ./incs/
+INCS_PATHS		= ./incs/ ./
 
 INCS			= $(addprefix -I,$(INCS_PATHS))
 

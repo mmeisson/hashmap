@@ -2,6 +2,7 @@
 # define HASHMAP_H
 
 # include <stdlib.h>
+# include <string.h>
 
 typedef void	(*c_hashmap_iterator)(const void *key, size_t key_size, const void *content);
 typedef void	(*c_hashmap_iterator_ctx)(

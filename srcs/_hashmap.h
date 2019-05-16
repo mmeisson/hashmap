@@ -1,8 +1,10 @@
-#ifndef _HASH_MAP_H
-# define _HASH_MAP_H
+#ifndef _HASHMAP_H
+# define _HASHMAP_H
 
 # include <stdlib.h>
 # include <unistd.h>
+
+# include "hashmap.h"
 
 /*
 **	REPLACE		If a key is already inserted, replace his value
@@ -63,38 +65,6 @@ static inline int		hashmap_is_underloaded(size_t capacity, size_t used)
 		&& used / (float)capacity < HASHMAP_MIN_LOAD;
 }
 
-typedef void	(*c_hashmap_iterator)(const void *key, size_t key_size, const void *content);
-typedef void	(*c_hashmap_iterator_ctx)(
-	const void *key, size_t key_size, const void *content, void *context
-);
-typedef void	(*c_hashmap_creator)(
-	const void *key,
-	size_t key_size,
-	const void *content,
-	void **new_key,
-	size_t *new_key_size,
-	void **new_content
-);
-typedef void	(*c_hashmap_creator_ctx)(
-	const void *key,
-	size_t key_size,
-	const void *content,
-	void **new_key,
-	size_t *new_key_size,
-	void **new_content,
-	void *context
-);
-typedef int		(*c_hashmap_validator)(const void *key, size_t key_size, const void *content);
-typedef int		(*c_hashmap_validator_ctx)(const void *key, size_t key_size, const void *content, void *context);
-typedef void	(*c_hashmap_reducor)(const void *key, size_t key_size, const void *content, void **data);
-typedef void	(*c_hashmap_reducor_ctx)(const void *key, size_t key_size, const void *content, void **data, void *context);
-typedef int		(*c_hashmap_comparator)(const void *left, const void *right);
-
-# if defined(__APPLE__) || defined(BSD)
-typedef int		(*c_hashmap_comparator_ctx)(void *context, const void *left, const void *right);
-# else
-typedef int		(*c_hashmap_comparator_ctx)(const void *left, const void *right, void *context);
-# endif
 
 /*
 **	An entry is a container for user data
@@ -141,37 +111,9 @@ struct			s_hashmap_sortcontext
 	c_hashmap_comparator_ctx	callback;
 };
 
-s_hashmap		*hashmap_new(s_hashmap *map);
-s_hashmap		*hashmap_new_cap(s_hashmap *map, size_t new_capacity);
 
-size_t			hashmap_hash(const void *content, size_t size);
-int				hashmap_insert(s_hashmap *map, const void *key, size_t key_size, const void * content);
-int				hashmap_resize(s_hashmap *hashmap, size_t new_capacity);
-const void		*hashmap_get(s_hashmap *hashmap, const void * key, size_t key_size);
-void			hashmap_remove(s_hashmap *hashmap, const void * key, size_t key_size, void (*remove)(void *, void *));
-void			hashmap_delete(s_hashmap *hashmap, void (*remove)(void *, void *));
-
-void			hashmap_reverse(s_hashmap *map);
-
-void			hashmap_sort_keys(s_hashmap *map, c_hashmap_comparator);
-void			hashmap_sort_content(s_hashmap *map, c_hashmap_comparator);
-void			hashmap_sort_keys_ctx(s_hashmap *map, c_hashmap_comparator_ctx, void *context);
-void			hashmap_sort_content_ctx(s_hashmap *map, c_hashmap_comparator_ctx, void *context);
-
-void			hashmap_iter(s_hashmap *map, c_hashmap_iterator callback);
-const void		*hashmap_find(s_hashmap *map, c_hashmap_validator callback);
-
-s_hashmap		*hashmap_filter(s_hashmap *map, c_hashmap_validator callback);
-s_hashmap		*hashmap_map(s_hashmap *map, c_hashmap_creator callback);
-void			hashmap_reduce(s_hashmap *map, c_hashmap_reducor callback);
-
-void			hashmap_iter_ctx(s_hashmap *map, c_hashmap_iterator_ctx callback, void *context);
-const void		*hashmap_find_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *content);
-
-s_hashmap		*hashmap_filter_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context);
-s_hashmap		*hashmap_map_ctx(s_hashmap *map, c_hashmap_creator_ctx callback, void *context);
-void			hashmap_reduce_ctx(s_hashmap *map, c_hashmap_reducor_ctx callback, void *context);
-
-void			hashmap_remap_indices(s_hashmap *map);
+size_t		hashmap_hash(const void *content, size_t size);
+void		hashmap_remap_indices(s_hashmap *map);
+int			hashmap_resize(s_hashmap *hashmap, size_t new_capacity);
 
 #endif
