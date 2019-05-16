@@ -17,9 +17,9 @@ s_hashmap   *hashmap_map_ctx(s_hashmap *map, c_hashmap_creator_ctx callback, voi
 		{
 			s_entry		*entry = map->entries + i;
 
-			size_t		key_size = 0;
-			void		*key = NULL;
-			void		*content = NULL;
+			size_t			key_size = 0;
+			void			*key = NULL;
+			HASHMAP_DATA	content = EMPTY_CONTAINER;
 
 			callback(
 				entry->key,

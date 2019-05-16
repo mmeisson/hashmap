@@ -1,7 +1,7 @@
 
 #include "_hashmap.h"
 
-const void		*hashmap_find_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context)
+HASHMAP_DATA	hashmap_find_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, void *context)
 {
 	if (map->entries != NULL)
 	{
@@ -15,5 +15,5 @@ const void		*hashmap_find_ctx(s_hashmap *map, c_hashmap_validator_ctx callback, 
 			}
 		}
 	}
-	return NULL;
+	return EMPTY_CONTAINER;
 }

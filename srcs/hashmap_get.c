@@ -3,7 +3,7 @@
 #include <string.h>
 #include "_hashmap.h"
 
-const void	*hashmap_get(s_hashmap *map, const void *key, size_t key_size)
+HASHMAP_DATA	hashmap_get(s_hashmap *map, const void *key, size_t key_size)
 {
 	size_t	hash = hashmap_hash(key, key_size);
 	size_t	normalized_hash;
@@ -31,5 +31,5 @@ const void	*hashmap_get(s_hashmap *map, const void *key, size_t key_size)
 		}
 		hash++;
 	}
-	return NULL;
+	return EMPTY_CONTAINER;
 }

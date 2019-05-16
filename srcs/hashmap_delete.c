@@ -22,7 +22,7 @@ void    hashmap_delete(
 
                 if (entry->key != NULL)
                 {
-                    remove((void *)entry->key, (void *)entry->content);
+                    remove((void *)entry->key, (void *)entry->content.as_ptr);
                 }
             }
         }

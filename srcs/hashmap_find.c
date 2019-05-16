@@ -1,7 +1,7 @@
 
 #include "_hashmap.h"
 
-const void		*hashmap_find(s_hashmap *map, c_hashmap_validator callback)
+HASHMAP_DATA	hashmap_find(s_hashmap *map, c_hashmap_validator callback)
 {
 	if (map->entries != NULL)
 	{
@@ -15,5 +15,5 @@ const void		*hashmap_find(s_hashmap *map, c_hashmap_validator callback)
 			}
 		}
 	}
-	return NULL;
+	return EMPTY_CONTAINER;
 }

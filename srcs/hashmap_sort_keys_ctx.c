@@ -8,9 +8,9 @@ static int	key_comparator(void *context, const void *first, const void *second)
 {
 	const s_entry	*f = first;
 	const s_entry	*s = second;
-	const struct	s_hashmap_sortcontext		*ctx = context;
+	const struct	s_hashmap_key_sortcontext		*ctx = context;
 
-	return ctx->callback((void *)f->key, s->key, ctx->context);
+	return ctx->callback(f->key, s->key, ctx->context);
 }
 
 #else
@@ -19,16 +19,16 @@ static int	key_comparator(const void *first, const void *second, void *context)
 {
 	const s_entry	*f = first;
 	const s_entry	*s = second;
-	const struct	s_hashmap_sortcontext		*ctx = context;
+	const struct	s_hashmap_key_sortcontext		*ctx = context;
 
-	return ctx->callback((void *)f->key, s->key, ctx->context);
+	return ctx->callback(f->key, s->key, ctx->context);
 }
 
 #endif
 
-void    hashmap_sort_keys_ctx(s_hashmap *map, c_hashmap_comparator_ctx callback, void *context)
+void    hashmap_sort_keys_ctx(s_hashmap *map, c_hashmap_key_comparator_ctx callback, void *context)
 {
-	struct		s_hashmap_sortcontext		*ctx = malloc(sizeof(*ctx));
+	struct		s_hashmap_key_sortcontext		*ctx = malloc(sizeof(*ctx));
 
 	if (ctx == NULL)
 	{

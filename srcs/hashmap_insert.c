@@ -6,7 +6,7 @@ int		hashmap_insert(
 	s_hashmap	*map,
 	const void	*key,
 	size_t		key_size,
-	const void	*content
+	const HASHMAP_DATA content
 )
 {
 	ssize_t		entry_index;

@@ -10,7 +10,7 @@ static int	content_comparator(void *context, const void *first, const void *seco
 	const s_entry	*s = second;
 	const struct	s_hashmap_sortcontext		*ctx = context;
 
-	return ctx->callback((void *)f->content, s->content, ctx->context);
+	return ctx->callback(f->content, s->content, ctx->context);
 }
 
 #else
@@ -21,7 +21,7 @@ static int	content_comparator(const void *first, const void *second, void *conte
 	const s_entry	*s = second;
 	const struct	s_hashmap_sortcontext		*ctx = context;
 
-	return ctx->callback((void *)f->content, s->content, ctx->context);
+	return ctx->callback(f->content, s->content, ctx->context);
 }
 
 #endif

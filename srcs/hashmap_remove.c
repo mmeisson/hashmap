@@ -7,7 +7,7 @@ void    hashmap_remove(
 	s_hashmap *map,
 	const void *key,
 	size_t key_size,
-	void (*remove)(void *, void *)
+	c_hashmap_eraser remove
 )
 {
 	size_t	hash = hashmap_hash(key, key_size);
@@ -28,7 +28,7 @@ void    hashmap_remove(
 			{
 				if (remove != NULL)
 				{
-					remove((void *)entry->key, (void *)entry->content);
+					remove((void *)entry->key, entry->content);
 				}
 				map->used--;
 				map->indices[normalized_hash] = HASHMAP_DUMMY_ENTRY;

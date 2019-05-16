@@ -92,18 +92,24 @@ typedef struct	s_entry
 	size_t			hash;
 	size_t			key_size;
 	const void		*key;
-	const void		*content;
+	HASHMAP_DATA	content;
 }				s_entry;
 
 
-typedef struct s_hashmap
+struct			s_hashmap
 {
 	size_t			capacity;
 	size_t			used;
 	size_t			nentries;
 	s_entry			*entries;
 	ssize_t			*indices;
-}				s_hashmap;
+};
+
+struct			s_hashmap_key_sortcontext
+{
+	void							*context;
+	c_hashmap_key_comparator_ctx	callback;
+};
 
 struct			s_hashmap_sortcontext
 {
