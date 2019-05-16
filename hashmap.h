@@ -4,6 +4,61 @@
 # include <stdlib.h>
 # include <string.h>
 
+
+/*
+**	hashmap's Data
+**	The hashmap is a data structure used to store any kind of data in a way
+**	you can retrieve it in contant time with a key of any type.
+**	This library gives a macro HASHMAP_DATA that will be used to define at
+**	compile time what kind of data can be used, and some usefull hopefully
+**	generic usefull data structures to use.
+**
+**	If you intend to use the hashmap only as an int store, you can
+**	define HASHMAP_DATA (int)
+**
+**	Avoid to set HASHMAP_DATA to a complex type since it it passed to
+**	hashmap's function by itself and not by pointers
+*/
+
+/*
+**	u_genmap_container is used to store data of basic types
+**	Gives the possibility to store both pointers and primitive types
+**	without casts everywhere
+*/
+typedef union		u_genmap_container
+{
+	void	*as_ptr;
+	char	*as_str;
+	size_t	as_uint;
+	ssize_t	as_sint;
+	double	as_float;
+	char	as_char;
+}					u_genmap_container;
+
+typedef enum		e_genmap_type_container
+{
+	TYPE_PTR,
+	TYPE_STR,
+	TYPE_UINT,
+	TYPE_SINT,
+	TYPE_FLOAT,
+	TYPE_CHAR,
+}					e_genmap_type_container;
+
+
+/*
+**	The following structure stores a type hinter if you need to use one at runtime
+**	for the u_genmap_container
+*/
+
+typedef struct		t_genmap_hint_container
+{
+	u_genmap_container			container;
+	e_genmap_type_container		type;
+}					t_genmap_hint_container;
+
+# define HASHMAP_DATA		u_genmap_container
+
 typedef void	(*c_hashmap_iterator)(const void *key, size_t key_size, const void *content);
 typedef void	(*c_hashmap_iterator_ctx)(
 	const void *key, size_t key_size, const void *content, void *ctx
@@ -74,7 +129,7 @@ s_hashmap		*hashmap_new_cap(s_hashmap *hasmap, size_t base_capacity);
 **	of these pointers until the hashmap is deleted
 **	This also means you can store some abstract type like function's pointers
 */
-int				hashmap_insert(s_hashmap *map, const void *key, size_t key_size, const void * content);
+int				hashmap_insert(s_hashmap *map, const void *key, size_t key_size, const void *content);
 
 /*
 **	Retrieve a data from a key. If the key does not exists, then return NULL.
